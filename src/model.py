@@ -38,10 +38,8 @@ class InventoryModel:
         return range(0, max_a + 1)
 
 
-    def immediate_cost_and_nextI(self, I: int, a: int, d: int) -> Tuple[float, int, int]:
-        # custo de pedido
+    def immediate_cost_and_nextI(self, I: int, a: int, d: int):
         order_cost = (self.K if a > 0 else 0.0) + self.c * a
-        # estoque após consumo
         available = I + a
         shortage = max(0, d - available)
         I_next = max(0, available - d)
@@ -49,6 +47,7 @@ class InventoryModel:
         shortage_cost = self.s * shortage
         total_cost = order_cost + holding_cost + shortage_cost
         return total_cost, I_next, shortage
+
 
 
     def expected_cost_and_next(self, I: int, a: int) -> float:

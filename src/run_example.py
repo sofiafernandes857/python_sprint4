@@ -24,7 +24,7 @@ def main():
     model = InventoryModel(T, I_max, A_max, I0, K, c, h, s, pmf)
 
     print("== Rodando soluções ==")
-    rec = solve_recursive(model, use_memo=False)
+    rec = solve_recursive(model, use_memo=True)
     mem = solve_memoized(model)
     bot = solve_bottom_up(model)
 

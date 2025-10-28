@@ -1,31 +1,31 @@
+# src/dp_recursive.py
 from functools import lru_cache
 from .model import InventoryModel
 
-
-# Versão recursiva "pura". Usamos lru_cache controlada
-# Para comportar-se como a versão recursiva com/sem memo variando o maxsize.
-
-
 def solve_recursive(model: InventoryModel, use_memo: bool = False):
-    T, I_max = model.T, model.I_max
+    """
+    Solver recursivo da equação de Bellman.
+    - use_memo=False: sem cache (muito lento em instâncias médias/grandes — apenas didático)
+    - use_memo=True: com cache ilimitado (rápido)
+    """
+    T = model.T
 
+    # decorator de identidade (não faz cache)
+    def _identity(f):
+        return f
 
-    def _cache(maxsize=None):
-        def deco(func):
-            return lru_cache(maxsize=maxsize)(func)
-        return deco
+    decorator = lru_cache(maxsize=None) if use_memo else _identity
 
-    maxsize = None if use_memo else 1
-
-
-    @_cache(maxsize=maxsize)
+    @decorator
     def V(t: int, I: int):
+        # condição terminal
         if t == T + 1:
-            return 0.0, 0 # custo futuro 0, ação nula
-        best = float('inf')
+            return 0.0, 0
+
+        best = float("inf")
         best_a = 0
+
         for a in model.actions(I):
-            # custo esperado do dia
             c_exp = 0.0
             v_future = 0.0
             for d, p in enumerate(model.pmf):
@@ -39,13 +39,8 @@ def solve_recursive(model: InventoryModel, use_memo: bool = False):
             if total < best:
                 best = total
                 best_a = a
+
         return best, best_a
 
-
-    # custo e ação ótimos iniciais
     v0, a0 = V(1, model.I0)
-    return {
-        'value_fn': V, # callable: V(t,I)->(valor,acao)
-        'V0': v0,
-        'A0': a0,
-    }
+    return {"value_fn": V, "V0": v0, "A0": a0}
