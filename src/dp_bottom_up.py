@@ -9,8 +9,6 @@ def solve_bottom_up(model: InventoryModel):
     PI = [[0 for _ in range(I_max + 1)] for _ in range(T + 1)]
 
     # Condição terminal: V[T+1][I] = 0 já está
-
-
     for t in range(T, 0, -1):
         for I in range(I_max + 1):
             best = float('inf')
