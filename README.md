@@ -1,4 +1,4 @@
-# 🧩 PD para Reposição de Insumos em Unidades de Diagnóstico — Relatório Explicativo (Passo a Passo)
+# 🧩 PD para Reposição de Insumos em Unidades de Diagnóstico — Relatório Explicativo
 
 ## 📘 Contexto e Objetivo
 Em unidades de diagnóstico, o consumo diário de insumos (reagentes e descartáveis) oscila conforme a demanda de exames.  
@@ -8,9 +8,6 @@ Sem registro preciso, o planejamento de estoque fica frágil: ora falta material
 - **Faltas** (penalidade por não atender toda a demanda),
 - **Excesso** (custo de manter estoque),
 - **Pedido** (custo fixo e unitário ao comprar).
-
-Usamos **Programação Dinâmica (PD)** porque é um problema de **decisão sequencial no tempo**: a decisão de hoje afeta o amanhã (estoque futuro e custos).
-
 ---
 
 ## 🧠 Formulação do Problema
